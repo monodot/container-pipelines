@@ -10,6 +10,7 @@ The following is a list of the pipeline samples available in this repository:
 - [Basic Spring Boot](./basic-spring-boot) - Builds a Spring Boot application and deploys using an Embedded Servlet jar file
 - [Blue Green Spring Boot](./blue-green-spring) - Build a Spring Boot application and deploys it using a blue-green deployment
 - [Cross Cluster Promotion Pipeline](./multi-cluster-spring-boot) - A [declarative syntax](https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline) pipeline that demonstrates promoting a microservice between clusters (i.e. a Non-Production to a Production cluster)
+- [Fuse on Spring Boot with Nexus](./fuse-spring-boot-nexus) - Builds a Red Hat Fuse on Spring Boot application, deploys the JAR to a Nexus repository and then builds and deploys a container image from the published JAR
 
 ## Makeup of a "Pipeline"
 
