@@ -38,6 +38,12 @@ objects:
           value: "${APPLICATION_SOURCE_REPO}"
         - name: "APPLICATION_SOURCE_REF"
           value: "${APPLICATION_SOURCE_REF}"
+        - name: "NAMESPACE_DEV"
+          value: "${NAMESPACE_DEV}"
+        - name: "NAMESPACE_STAGE"
+          value: "${NAMESPACE_STAGE}"
+        - name: "NAMESPACE_PROD"
+          value: "${NAMESPACE_PROD}"
       type: JenkinsPipeline
     triggers:
     - type: ConfigChange
@@ -87,5 +93,17 @@ parameters:
   displayName: Application Git Repository Ref
   description: Set this to a branch name, tag or other ref of your repository if you are not using the default (master) branch
   value: v7.2.0
+- name: NAMESPACE_DEV
+  displayName: Development Namespace
+  description: Name of the dev namespace to deploy objects to
+  value: basic-spring-boot-dev
+- name: NAMESPACE_STAGE
+  displayName: Staging Namespace
+  description: Name of the dev namespace to deploy objects to
+  value: basic-spring-boot-stage
+- name: NAMESPACE_PROD
+  displayName: Production Namespace
+  description: Name of the dev namespace to deploy objects to
+  value: basic-spring-boot-prod
 labels:
   template: fuse-app-pipeline-template

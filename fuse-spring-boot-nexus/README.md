@@ -23,6 +23,9 @@ Create the initial pipeline:
       -p SOURCE_REPOSITORY_REF=nexus-spring-boot \
       -p APPLICATION_SOURCE_REPO=https://github.com/jboss-fuse/fuse-rest-http-booster.git \
       -p APPLICATION_SOURCE_REF=v7.2.0 \
+      -p NAMESPACE_DEV=labs-dev \
+      -p NAMESPACE_STAGE=labs-stage \
+      -p NAMESPACE_PROD=labs-release \
       | oc create -f -
 
 

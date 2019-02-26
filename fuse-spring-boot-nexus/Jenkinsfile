@@ -38,7 +38,7 @@ pipeline {
         echo '👷 Create OpenShift objects using openshift-applier...'
         sh  '''
         ansible-galaxy install -r requirements.yml --roles-path=.applier/roles
-        ansible-playbook -i .applier/inventory .applier/apply.yml -e filter_tags=dev
+        ansible-playbook -i .applier/inventory .applier/apply.yml -e filter_tags=dev -e sb_dev_namespace=${NAMESPACE_DEV}
         '''
       }
     }
