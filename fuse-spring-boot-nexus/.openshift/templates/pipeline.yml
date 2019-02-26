@@ -33,6 +33,11 @@ objects:
     strategy:
       jenkinsPipelineStrategy:
         jenkinsfilePath: Jenkinsfile
+        env:
+        - name: "APPLICATION_SOURCE_REPO"
+          value: "${APPLICATION_SOURCE_REPO}"
+        - name: "APPLICATION_SOURCE_REF"
+          value: "${APPLICATION_SOURCE_REF}"
       type: JenkinsPipeline
     triggers:
     - type: ConfigChange
@@ -49,12 +54,12 @@ parameters:
   required: true
   value: fuse-app
 - name: SOURCE_REPOSITORY_URL
-  displayName: Git Repository URL
+  displayName: Pipeline Git Repository URL
   description: The URL of the repository containing your Jenkinsfile.
   required: true
   value: https://github.com/redhat-cop/container-pipelines.git
 - name: SOURCE_REPOSITORY_REF
-  displayName: Git Reference
+  displayName: Pipeline Git Repository Reference
   description: Set this to a branch name, tag or other ref of your repository if you
     are not using the default (master) branch.
   value: master
@@ -73,5 +78,14 @@ parameters:
   description: OCP secret string to configure a GitHub webhook
   generate: expression
   from: "[a-zA-Z0-9]{20}"
+- name: APPLICATION_SOURCE_REPO
+  displayName: Application Git Repository URL
+  description: The URL of the repository containing your application source code
+  required: true
+  value: //github.com/fabric8-quickstarts/spring-boot-camel.git
+- name: APPLICATION_SOURCE_REF
+  displayName: Application Git Repository Ref
+  description: Set this to a branch name, tag or other ref of your repository if you are not using the default (master) branch
+  value: master
 labels:
   template: fuse-app-pipeline-template
