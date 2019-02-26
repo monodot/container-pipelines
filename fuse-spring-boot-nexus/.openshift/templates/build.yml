@@ -70,7 +70,7 @@ parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
   required: true
-  value: basic-spring
+  value: basic-fuse
 - description: The namespace to deploy into
   name: NAMESPACE
   required: true

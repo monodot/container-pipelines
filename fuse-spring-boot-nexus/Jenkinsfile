@@ -10,7 +10,56 @@ openshift.withCluster() {
 }
 
 pipeline {
+  // Use Jenkins Maven slave
+  // Jenkins will dynamically provision this as OpenShift Pod
+  // All the stages and steps of this Pipeline will be executed on this Pod
+  // After Pipeline completes the Pod is killed so every run will have clean
+  // workspace
+  agent {
+    label 'maven'
+  }
+  
+  stages {
+    
+    stage('Git Checkout') {
+      steps {
+        
+      }
+    }
+    
+    stage('Deploy OCP Objects to DEV') {
+      agent {
+        label 'jenkins-slave-ansible'
+      }
+      
+      steps {
+        echo '👷 Create OpenShift objects using openshift-applier...'
+        sh  '''
+        ansible-galaxy install -r .applier/requirements.yml --roles-path=.applier/roles
+        ansible-playbook -i .applier/inventory .applier/apply.yml -e filter_tags=dev
+        '''
+      }
+    }
+    
+    stage('Build') {
+      steps {
+        echo '❤️ Running Maven build...'
+        sh "mvn -B clean install -DskipTests=true"
+        
+        echo '💚 Running tests...'
+        sh "mvn -B test"
 
-
+        echo '💙 Deploying to artifact repository...'
+        sh "mvn -B deploy -DskipTests=true"
+      }
+    }
+    
+    stage('Unit Test') {
+      steps {
+        
+      }
+    }
+  }
+  
 }
 

@@ -1,0 +1,77 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: fuse-app-pipeline
+  annotations:
+    openshift.io/display-name: Fuse Application Pipeline 
+    description: OpenShift Jenkinsfile Strategy Pipeline
+    iconClass: fa-cube
+    tags: jenkins-pipeline
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      build: "${APPLICATION_NAME}"
+      name: "${APPLICATION_NAME}-pipeline"
+      type: pipeline
+      app: "${APPLICATION_NAME}"
+    name: "${APPLICATION_NAME}-pipeline"
+  spec:
+    nodeSelector: {}
+    output: {}
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: "${CONTEXT_DIR}"
+      git:
+        ref: "${SOURCE_REPOSITORY_REF}"
+        uri: "${SOURCE_REPOSITORY_URL}"
+      type: Git
+    strategy:
+      jenkinsPipelineStrategy:
+        jenkinsfilePath: Jenkinsfile
+      type: JenkinsPipeline
+    triggers:
+    - type: ConfigChange
+    - type: GitHub
+      github:
+        secret: "${GITHUB_WEBHOOK}"
+    - type: Generic
+      generic:
+        secret: "${GENERIC_WEBHOOK}"
+parameters:
+- name: APPLICATION_NAME
+  displayName: Application Name
+  description: The name assigned to all objects and the resulting imagestream.
+  required: true
+  value: fuse-app
+- name: SOURCE_REPOSITORY_URL
+  displayName: Git Repository URL
+  description: The URL of the repository containing your Jenkinsfile.
+  required: true
+  value: https://github.com/redhat-cop/container-pipelines.git
+- name: SOURCE_REPOSITORY_REF
+  displayName: Git Reference
+  description: Set this to a branch name, tag or other ref of your repository if you
+    are not using the default (master) branch.
+  value: master
+- name: CONTEXT_DIR
+  displayName: Git Context Directory for Jenkinsfile
+  description: Set this to the directory where the Jenkinsfile is located (if not using the
+    default root directory)
+  value: fuse-spring-boot-nexus
+- name: GENERIC_WEBHOOK
+  displayName: Generic Webook
+  description: OCP secret string to configure a Generic webhook
+  generate: expression
+  from: "[a-zA-Z0-9]{20}"
+- name: GITHUB_WEBHOOK
+  displayName: GitHub Webook
+  description: OCP secret string to configure a GitHub webhook
+  generate: expression
+  from: "[a-zA-Z0-9]{20}"
+labels:
+  template: fuse-app-pipeline-template
