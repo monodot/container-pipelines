@@ -18,11 +18,13 @@ Features of this pipeline:
 Create the initial pipeline:
 
     oc process -f .openshift/templates/pipeline.yml \
-      -p APPLICATION_NAME=basic-fuse-app \
+      -p APPLICATION_NAME=sample-fuse-app \
       -p SOURCE_REPOSITORY_URL=https://github.com/monodot/container-pipelines \
       -p SOURCE_REPOSITORY_REF=nexus-spring-boot \
+      -p APPLICATION_SOURCE_REPO=https://github.com/jboss-fuse/fuse-rest-http-booster.git \
+      -p APPLICATION_SOURCE_REF=v7.2.0 \
       | oc create -f -
-    
+
 
 [applier]: https://github.com/redhat-cop/openshift-applier
 [1]: https://docs.openshift.com/container-platform/3.9/architecture/core_concepts/builds_and_image_streams.html#pipeline-build
