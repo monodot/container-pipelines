@@ -82,10 +82,10 @@ parameters:
   displayName: Application Git Repository URL
   description: The URL of the repository containing your application source code
   required: true
-  value: //github.com/fabric8-quickstarts/spring-boot-camel.git
+  value: https://github.com/jboss-fuse/fuse-rest-http-booster.git
 - name: APPLICATION_SOURCE_REF
   displayName: Application Git Repository Ref
   description: Set this to a branch name, tag or other ref of your repository if you are not using the default (master) branch
-  value: master
+  value: v7.2.0
 labels:
   template: fuse-app-pipeline-template
